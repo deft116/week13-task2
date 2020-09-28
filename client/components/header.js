@@ -1,11 +1,7 @@
 import React from 'react'
 
 const Header = () => {
-  return (
-    <>
-      <h1>SOME HEADER</h1>
-    </>
-  )
+  return <div className="text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">SOME HEADRE</div>
 }
 
 Header.propTypes = {}
