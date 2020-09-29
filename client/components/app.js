@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from './header'
 import InputTask from './input-task'
 import Task from './task'
 
 const App = () => {
+  const [newTask, setNewTask] = useState('')
   return (
     <>
       <Header />
-      <InputTask />
-      <Task />
+      <InputTask setNewTask={setNewTask} />
+      <Task newTask={newTask} />
     </>
   )
 }
