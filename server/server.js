@@ -32,7 +32,7 @@ const port = process.env.PORT || 8090
 const server = express()
 const shortid = require('shortid')
 
-const { writeFile } = require('fs').promises
+const { writeFile, readFile } = require('fs').promises
 
 const middleware = [
   cors(),
@@ -48,6 +48,17 @@ const saveFile = (file) => {
   writeFile(`${__dirname}/task.json`, file, { encoding: 'utf8' })
 }
 
+const openFile = async () => {
+  const file = await readFile(`${__dirname}/task.json`, { encoding: 'utf8' })
+    .then((data) => data)
+    .catch(() => {
+      const newFile = []
+      saveFile(JSON.stringify(newFile))
+      return openFile()
+    })
+  return file
+}
+
 server.post('/api/v1/tasks/:category', async (req, res) => {
   const newTask = {
     taskId: shortid.generate(),
@@ -57,9 +68,12 @@ server.post('/api/v1/tasks/:category', async (req, res) => {
     _createdAt: +new Date(),
     _deletedAt: null
   }
-  saveFile(JSON.stringify(newTask))
+  let file = await openFile().then((data) => JSON.parse(data))
+  file = [...file, newTask]
 
-  res.json({ status: 'success' })
+  saveFile(JSON.stringify(file))
+
+  res.json({ status: 'success', task: JSON.stringify(newTask) })
 })
 
 server.use('/api/', (req, res) => {
