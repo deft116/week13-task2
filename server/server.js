@@ -30,6 +30,9 @@ let connections = []
 
 const port = process.env.PORT || 8090
 const server = express()
+const shortid = require('shortid')
+
+const { writeFile } = require('fs').promises
 
 const middleware = [
   cors(),
@@ -40,6 +43,24 @@ const middleware = [
 ]
 
 middleware.forEach((it) => server.use(it))
+
+const saveFile = (file) => {
+  writeFile(`${__dirname}/task.json`, file, { encoding: 'utf8' })
+}
+
+server.post('/api/v1/tasks/:category', async (req, res) => {
+  const newTask = {
+    taskId: shortid.generate(),
+    title: req.body.title,
+    status: 'new',
+    _isDeleted: false,
+    _createdAt: +new Date(),
+    _deletedAt: null
+  }
+  saveFile(JSON.stringify(newTask))
+
+  res.json({ status: 'success' })
+})
 
 server.use('/api/', (req, res) => {
   res.status(404)
