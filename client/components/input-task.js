@@ -8,10 +8,12 @@ const InputTask = ({ setNewTask }) => {
   }
 
   const newTask = () => {
-    setNewTask({
-      title: value
-    })
-    setValue('')
+    if (value) {
+      setNewTask({
+        title: value
+      })
+      setValue('')
+    }
   }
 
   return (
