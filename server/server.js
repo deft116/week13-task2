@@ -73,7 +73,7 @@ server.post('/api/v1/tasks/:category', async (req, res) => {
 
   saveFile(JSON.stringify(file))
 
-  res.json({ status: 'success', task: JSON.stringify(newTask) })
+  res.json(file)
 })
 
 server.use('/api/', (req, res) => {

@@ -6,11 +6,13 @@ import Task from './task'
 
 const App = () => {
   const [newTask, setNewTask] = useState('')
+  const [allTasks, setAllTasks] = useState([])
 
   useEffect(() => {
     if (newTask) {
       axios
         .post('http://localhost:8087/api/v1/tasks/:category', newTask)
+        .then((res) => setAllTasks(res.data))
         .catch((e) => console.log(e, newTask))
     }
     return () => {}
@@ -20,7 +22,7 @@ const App = () => {
     <>
       <Header />
       <InputTask setNewTask={setNewTask} />
-      <Task newTask={newTask.title} />
+      <Task allTasks={allTasks} />
     </>
   )
 }
