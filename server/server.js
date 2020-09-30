@@ -76,6 +76,14 @@ server.post('/api/v1/tasks/:category', async (req, res) => {
   res.json(file)
 })
 
+server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
+  const file = await openFile().then((data) => JSON.parse(data))
+  const { status, index } = req.body
+  file[index].status = status
+  saveFile(JSON.stringify(file))
+  res.json(file)
+})
+
 server.use('/api/', (req, res) => {
   res.status(404)
   res.end()
