@@ -22,7 +22,7 @@ const App = () => {
     <>
       <Header />
       <InputTask setNewTask={setNewTask} />
-      <Task allTasks={allTasks} />
+      <Task allTasks={allTasks} setAllTasks={setAllTasks} />
     </>
   )
 }

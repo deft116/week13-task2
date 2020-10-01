@@ -1,13 +1,13 @@
 import React from 'react'
 import axios from 'axios'
 
-const BtnStatus = ({ status, index }) => {
+const BtnStatus = ({ status, setAllTasks, index }) => {
   const testStatus = () => {
     const newStatus = {
       status,
       index
     }
-    axios.patch(`/api/v1/tasks/:category/:id`, newStatus)
+    axios.patch(`/api/v1/tasks/:category/:id`, newStatus).then((res) => setAllTasks(res.data))
   }
   return (
     <button
