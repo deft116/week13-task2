@@ -78,17 +78,17 @@ server.post('/api/v1/tasks/:category', async (req, res) => {
 
 server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
   const file = await openFile().then((data) => JSON.parse(data))
-  const { status, index } = req.body
+  const { newStatus, index } = req.body
 
-  switch (status) {
+  switch (newStatus) {
     case 'new':
       file[index].status = 'blocked'
       break
     case 'blocked':
-      file[index].status = 'in progress'
+      file[newStatus].status = 'in progress'
       break
     case 'in progress':
-      file[index].status = 'done'
+      file[newStatus].status = 'done'
       break
     default:
       console.log({ status: 'error', message: 'incorrect status' })
