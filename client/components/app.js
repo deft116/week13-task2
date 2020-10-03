@@ -7,6 +7,7 @@ import Task from './task'
 const App = () => {
   const [newTask, setNewTask] = useState('')
   const [allTasks, setAllTasks] = useState([])
+  const [newStatus, setNewStatus] = useState({ taskId: 0, status: '' })
 
   useEffect(() => {
     if (newTask) {
@@ -18,11 +19,16 @@ const App = () => {
     return () => {}
   }, [newTask])
 
+  useEffect(() => {
+    console.log(newStatus)
+    return () => {}
+  }, [newStatus])
+
   return (
     <>
       <Header />
       <InputTask setNewTask={setNewTask} />
-      <Task allTasks={allTasks} setAllTasks={setAllTasks} />
+      <Task allTasks={allTasks} setAllTasks={setAllTasks} setNewStatus={setNewStatus} />
     </>
   )
 }
