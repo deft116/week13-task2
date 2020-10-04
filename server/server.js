@@ -78,8 +78,9 @@ server.post('/api/v1/tasks/:category', async (req, res) => {
 
 server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
   const file = await openFile().then((data) => JSON.parse(data))
-  const { taskId, newStatus } = req.body
-  const indexOfEditTask = file.findIndex((item) => item.taskId === taskId)
+  const { newStatus } = req.body
+  const { id } = req.params
+  const indexOfEditTask = file.findIndex((item) => item.taskId === id)
   file[indexOfEditTask].status = newStatus
   saveFile(JSON.stringify(file))
   res.json(file)
@@ -87,8 +88,8 @@ server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
 
 server.put('/api/v1/tasks/:category/:id', async (req, res) => {
   const file = await openFile().then((data) => JSON.parse(data))
-  const { taskId } = req.body
-  const indexOfEditTask = file.findIndex((item) => item.taskId === taskId)
+  const { id } = req.params
+  const indexOfEditTask = file.findIndex((item) => item.taskId === id)
   file[indexOfEditTask].isDeleted = true
   saveFile(JSON.stringify(file))
   res.json(file)

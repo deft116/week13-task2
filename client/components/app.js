@@ -22,14 +22,18 @@ const App = () => {
 
   useEffect(() => {
     if (newStatus) {
-      axios.patch(`/api/v1/tasks/:category/:id`, newStatus).then((res) => setAllTasks(res.data))
+      axios
+        .patch(`/api/v1/tasks/:category/${newStatus.taskId}`, newStatus)
+        .then((res) => setAllTasks(res.data))
     }
     return () => {}
   }, [newStatus])
 
   useEffect(() => {
     if (deleteTask) {
-      axios.put(`/api/v1/tasks/:category/:id`, deleteTask).then((res) => setAllTasks(res.data))
+      axios
+        .put(`/api/v1/tasks/:category/${deleteTask.taskId}`, deleteTask)
+        .then((res) => setAllTasks(res.data))
     }
     return () => {}
   }, [deleteTask])
