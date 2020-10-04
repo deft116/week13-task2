@@ -20,7 +20,7 @@ const App = () => {
   }, [newTask])
 
   useEffect(() => {
-    console.log(newStatus)
+    axios.patch(`/api/v1/tasks/:category/:id`, newStatus).then((res) => setAllTasks(res.data))
     return () => {}
   }, [newStatus])
 
@@ -28,7 +28,7 @@ const App = () => {
     <>
       <Header />
       <InputTask setNewTask={setNewTask} />
-      <Task allTasks={allTasks} setAllTasks={setAllTasks} setNewStatus={setNewStatus} />
+      <Task allTasks={allTasks} setNewStatus={setNewStatus} />
     </>
   )
 }
