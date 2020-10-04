@@ -1,9 +1,15 @@
 import React from 'react'
 
-const BtnProgAndBlock = ({ text, setNewStatus, index }) => {
+const BtnProgAndBlock = ({ status, setNewStatus, taskId }) => {
+  let text = ''
+  if (status === 'new' || status === 'blocked') {
+    text = 'in progress'
+  } else {
+    text = 'blocked'
+  }
   const patchStatus = () => {
     const newStatus = {
-      index,
+      taskId,
       newStatus: text
     }
     setNewStatus(newStatus)

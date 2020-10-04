@@ -7,7 +7,8 @@ import Task from './task'
 const App = () => {
   const [newTask, setNewTask] = useState('')
   const [allTasks, setAllTasks] = useState([])
-  const [newStatus, setNewStatus] = useState({ taskId: 0, status: '' })
+  const [newStatus, setNewStatus] = useState(false)
+  const [deleteTask, setDeleteTask] = useState(false)
 
   useEffect(() => {
     if (newTask) {
@@ -20,15 +21,24 @@ const App = () => {
   }, [newTask])
 
   useEffect(() => {
-    axios.patch(`/api/v1/tasks/:category/:id`, newStatus).then((res) => setAllTasks(res.data))
+    if (newStatus) {
+      axios.patch(`/api/v1/tasks/:category/:id`, newStatus).then((res) => setAllTasks(res.data))
+    }
     return () => {}
   }, [newStatus])
+
+  useEffect(() => {
+    if (deleteTask) {
+      axios.put(`/api/v1/tasks/:category/:id`, deleteTask).then((res) => setAllTasks(res.data))
+    }
+    return () => {}
+  }, [deleteTask])
 
   return (
     <>
       <Header />
       <InputTask setNewTask={setNewTask} />
-      <Task allTasks={allTasks} setNewStatus={setNewStatus} />
+      <Task allTasks={allTasks} setNewStatus={setNewStatus} setDeleteTask={setDeleteTask} />
     </>
   )
 }
